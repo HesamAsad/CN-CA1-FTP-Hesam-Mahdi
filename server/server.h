@@ -13,11 +13,11 @@ class  Server {
     void parse_json();
     socketData handleConnections();
     void connectCh(char* argv[]);
-    bool find_username(std::string);
-    bool find_password(std::string , std::string, bool*);
-    void handle_user(std::string*, bool*, bool, int, int, std::vector<std::string>);
+    bool findUsername(std::string);
+    bool findPass(std::string , std::string, bool*);
+    void handleUser(std::string*, bool*, bool, int, int, std::vector<std::string>);
+    void handlePass(std::string, bool*, bool*, int, int, std::vector<std::string>, bool*);
     void handleInfo(void* );
-    void handle_pass(std::string, bool*, bool*, int, int, std::vector<std::string>, bool*);
     void handleHelp(std::vector<std::string>, int, int, bool, bool, std::string);
     void send_help(int);
     void handle_ls(std::vector<std::string>, int, int, bool, bool, std::string, std::string);
@@ -29,8 +29,6 @@ class  Server {
     std::vector<std::string> parse_command(char[]);
     void handle_quit(std::vector<std::string>, int, int, bool*, bool*, std::string*,bool*, std::string*);
     void printTime();
-    void printLoginError(std::string, int, int);
-    void printSyntaxError(std::string, int, int, std::string);
     void handle_rename(std::vector<std::string>, int, int, bool, bool, bool, std::string, std::string);
     void handle_error(int, int);
     std::string checkForServer(std::string cwd, bool*);
@@ -49,4 +47,6 @@ class  Server {
     std::vector<std::string> login_commands{"pwd", "mkd", "dele", "ls", "cwd", "rename", "retr", "help", "quit"};
     std::vector<std::string> help;
 
+    void printLoginError(std::string, int, int);
+    void printSyntaxError(std::string, int, int, std::string);
 };

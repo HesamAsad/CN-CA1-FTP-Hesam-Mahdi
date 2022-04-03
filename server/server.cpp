@@ -9,8 +9,8 @@ void Server::printTime() {
 
 void Server::parse_json() {
   json.jsonParser();
-  users_list = json.get_users();
-  protected_files = json.get_files();
+  users_list = json.getUsers();
+  protected_files = json.getFiles();
   bool exists = fileExists("log.txt");
   logs.open("log.txt", std::ios_base::app);
   if(!exists) {
@@ -66,8 +66,8 @@ socketData Server::handleConnections(){
   int addrlen;
   int addrlen2;
   struct sockaddr_in reqaddress;
-  memset(&reqaddress, 0, sizeof(reqaddress));
   struct sockaddr_in dataAddrss;
+  memset(&reqaddress, 0, sizeof(reqaddress));
   memset(&dataAddrss, 0, sizeof(dataAddrss));
   addrlen = sizeof(reqaddress);
   addrlen2 = sizeof(dataAddrss);
@@ -78,8 +78,8 @@ socketData Server::handleConnections(){
   char* addr = inet_ntoa(reqaddress.sin_addr);
   char port[256]; 
   itoa_simple(port, ntohs(reqaddress.sin_port));
-  std::string msg  = "$YOU ARE NOW CONNECTED TO REQUEST CHANNEL";
-  logs<<"New Connection in request channel, address :127.0.0.1:"<<port<<std::endl;
+  std::string msg  = "connected to req channel";
+  logs<<"\nNew Connection in request channel, address 127.0.0.1:"<<port<<std::endl;
   send(reqSocket, str2charstar(msg), 42, 0);
   if((dataSocket = accept(data_channel, (struct sockaddr *)&dataAddrss, (socklen_t*)&addrlen2)) < 0){
       std::cout<<"accept"<<std::endl;
@@ -88,8 +88,8 @@ socketData Server::handleConnections(){
   addr = inet_ntoa(dataAddrss.sin_addr);
   port[256]; 
   itoa_simple(port, ntohs(dataAddrss.sin_port));
-  msg  = "$YOU ARE NOW CONNECTED TO DATA CHANNEL";
-  logs<<"New Connection in data channel, address :127.0.0.2:"<<port<<std::endl;
+  msg  = "connected to data channel";
+  logs<<"New Connection in data channel, address 127.0.0.2:"<<port<<std::endl;
   send(dataSocket, str2charstar(msg), 39, 0);
   int t, i;
   socketData newSocket;
@@ -145,14 +145,14 @@ void Server::connectCh(char* ports[]){
     }
 }
 
-bool Server::find_username(std::string username){
+bool Server::findUsername(std::string username){
   for(int i = 0; i < users_list.size(); i++)
     if(users_list[i].get_username() == username)
       return true;
   return false;
 }
 
-bool Server::find_password(std::string password, std::string username, bool* isAdmin){
+bool Server::findPass(std::string password, std::string username, bool* isAdmin){
   for(int i = 0; i < users_list.size(); i++)
     if(users_list[i].get_password() == password && users_list[i].get_username() == username){
       *isAdmin = users_list[i].is_admin();
@@ -161,7 +161,7 @@ bool Server::find_password(std::string password, std::string username, bool* isA
   return false;
 }
 
-void Server::handle_user(std::string* loggedInUsername, bool* user, bool pass, int commandSocket, int dataSocket, std::vector<std::string> parsed){
+void Server::handleUser(std::string* loggedInUsername, bool* user, bool pass, int commandSocket, int dataSocket, std::vector<std::string> parsed){
   if(*user && pass) {
     send(commandSocket, "500: Error", 12, 0);
     printTime();
@@ -176,7 +176,7 @@ void Server::handle_user(std::string* loggedInUsername, bool* user, bool pass, i
     *loggedInUsername = "";
   }
   else{
-    if(find_username(parsed[1])){
+    if(findUsername(parsed[1])){
       send(commandSocket, "331: User name okay, need password.", 36, 0);
       *user = true;
       *loggedInUsername = parsed[1];
@@ -205,9 +205,9 @@ void Server::handleInfo(void* newSocket){
       recv(sock->commandSocket, in, 256, 0);
       std::vector<std::string> parsed = parse_command(in);
       if(parsed[0] == "user")
-        handle_user(&loggedInUsername, &user, pass, sock->commandSocket, sock->dataSocket, parsed);
+        handleUser(&loggedInUsername, &user, pass, sock->commandSocket, sock->dataSocket, parsed);
       else if(parsed[0] == "pass")
-        handle_pass(loggedInUsername, &user, &pass, sock->commandSocket, sock->dataSocket, parsed, &isAdmin);
+        handlePass(loggedInUsername, &user, &pass, sock->commandSocket, sock->dataSocket, parsed, &isAdmin);
       else if(parsed[0] == "help")
         handleHelp(parsed, sock->commandSocket, sock->dataSocket, user, pass, loggedInUsername);
       else if(parsed[0] == "pwd")
@@ -232,7 +232,7 @@ void Server::handleInfo(void* newSocket){
   }
 }
 
-void Server::handle_pass(std::string username, bool* user, bool* pass, int commandSocket, int dataSocket, std::vector<std::string> parsed, bool* isAdmin){
+void Server::handlePass(std::string username, bool* user, bool* pass, int commandSocket, int dataSocket, std::vector<std::string> parsed, bool* isAdmin){
   if(*user && *pass){
     send(commandSocket, "500: Error", 12, 0);
     printTime();
@@ -256,7 +256,7 @@ void Server::handle_pass(std::string username, bool* user, bool* pass, int comma
   }
   else{
     printTime();
-    if(find_password(parsed[1], username, isAdmin)){
+    if(findPass(parsed[1], username, isAdmin)){
       send(commandSocket, "230: User logged in, proceed. Logged out if appropriate.", 57, 0);
       logs<<"client with command socket id: "<<commandSocket<<", data socket id: "<<dataSocket
           <<",logged in as: "<<username<<std::endl;
@@ -416,7 +416,7 @@ void Server::handle_mkd(std::vector<std::string> parsed, int commandSocket, int 
     command += temp1;
   }
   system(command.c_str());
-  std::string msg = "257: " + (flag ? "./server" : cwd) + "/" + checkForServer(parsed[1], &flag) + " created.";
+  std::string msg = "257: " + (flag ? "./server" : cwd) + "/" + checkForServer(parsed[1], &flag);
   send(commandSocket, msg.c_str(), msg.size(), 0);
   printTime();
   logs<<"client "<<username<<" with command socket id: "<<commandSocket<<", data socket id: "<<dataSocket

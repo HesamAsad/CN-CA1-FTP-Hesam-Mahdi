@@ -9,7 +9,7 @@ std::string users_str;
 std::string files_str;
 
 
-void Json::break_data(int i){
+void Json::breakData(int i){
     int j = 0;
     int size = 0;
     std::string username;
@@ -75,12 +75,12 @@ void Json::break_data(int i){
     user_list.push_back(u);
 }
 
-void Json::find_user_data() {
+void Json::findUserData() {
     for(int i = 0; i < data.size(); i++)
-        break_data(i);
+        breakData(i);
 }
 
-void Json::parse_files() {
+void Json::parseFiles() {
     int i =0;
     std::string file;
     while(i < files_str.length()) {
@@ -97,7 +97,7 @@ void Json::parse_files() {
         admin_files.push_back(file);
 }
 
-void Json::parse_users() {
+void Json::parseUsers() {
     std::string str;
     int i = 0;
     while(i < users_str.length()) {
@@ -178,7 +178,7 @@ void Json::parse(std::string json_data) {
     }
 }
 
-std::string Json::remove_whitespace(std::string str){
+std::string Json::removeWhitespace(std::string str){
     std::string json_data;
     for(int i = 0; i < str.length(); i++){
         if(isspace(str[i]) || str[i] == '\n' || str[i] == '\t')
@@ -194,17 +194,17 @@ void Json::jsonParser(){
     std::string str, json_data;
     while(getline(fin, str))
         json_data += str;
-    json_data = remove_whitespace(json_data);
+    json_data = removeWhitespace(json_data);
     json_data.erase(json_data.begin());
     json_data.erase(json_data.end()-1);
     json_data.erase(std::remove(json_data.begin(), json_data.end(), '\"'), json_data.end());
     parse(json_data);
-    parse_users();
-    parse_files();
-    find_user_data();
+    parseUsers();
+    parseFiles();
+    findUserData();
 }
 
-std::vector<User> Json::get_users() { return user_list; }
-std::vector<std::string> Json::get_files() { return admin_files; }
+std::vector<User> Json::getUsers() { return user_list; }
+std::vector<std::string> Json::getFiles() { return admin_files; }
 std::string Json::getCommandPort() { return commandPort; }
 std::string Json::getDataPort() { return dataPort; }

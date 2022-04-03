@@ -69,3 +69,89 @@ client Mohsen with command socket id: 6, data socket id: 7, used 'quit' command
 
 [Sun Apr  3 18:31:32 2022]
 client Ali with command socket id: 8, data socket id: 9, used 'quit' command
+New Connection in request channel, address :127.0.0.1:58584
+New Connection in data channel, address :127.0.0.2:37900
+
+[Sun Apr  3 19:25:25 2022]
+Adding to list of sockets as: 0
+
+[Sun Apr  3 19:25:29 2022]
+LOGIN ERROR
+client with command socket id: 6, data socket id: 7, used 'ls' without logging in.
+
+[Sun Apr  3 19:25:31 2022]
+client with command socket id: 6, data socket id: 7, entered username: Ali, should enter password.
+
+[Sun Apr  3 19:25:36 2022]
+client with command socket id: 6, data socket id: 7,logged in as: Ali
+
+[Sun Apr  3 19:25:39 2022]
+client Ali with command socket id: 6, data socket id: 7, used 'quit' command
+New Connection in request channel, address :127.0.0.1:58586
+New Connection in data channel, address :127.0.0.2:37902
+
+[Sun Apr  3 19:32:09 2022]
+Adding to list of sockets as: 0
+
+[Sun Apr  3 19:32:17 2022]
+client with command socket id: 6, data socket id: 7, entered username: Ali, should enter password.
+
+[Sun Apr  3 19:32:19 2022]
+client with command socket id: 6, data socket id: 7,logged in as: Ali
+
+New Connection in request channel, address :127.0.0.1:58588
+New Connection in data channel, address :127.0.0.2:37904
+
+[Sun Apr  3 19:36:29 2022]
+Adding to list of sockets as: 0
+
+[Sun Apr  3 19:36:32 2022]
+client with command socket id: 6, data socket id: 7, entered an invalid username.
+
+[Sun Apr  3 19:36:35 2022]
+client with command socket id: 6, data socket id: 7, entered username: Ali, should enter password.
+
+[Sun Apr  3 19:36:37 2022]
+client with command socket id: 6, data socket id: 7,logged in as: Ali
+
+[Sun Apr  3 19:36:39 2022]
+client Ali with command socket id: 6, data socket id: 7, used 'pwd' command
+
+[Sun Apr  3 19:36:42 2022]
+client Ali with command socket id: 6, data socket id: 7, used 'ls' command
+
+[Sun Apr  3 19:36:47 2022]
+client Ali with command socket id: 6, data socket id: 7, used 'retr log.txt' command
+
+[Sun Apr  3 19:37:03 2022]
+client Ali with command socket id: 6, data socket id: 7 renamed file: ./server/log.txt to: log2.txt
+
+[Sun Apr  3 19:37:37 2022]
+client Ali with command socket id: 6, data socket id: 7 created 257: ./server/test created.
+
+[Sun Apr  3 19:37:44 2022]
+client Ali with command socket id: 6, data socket id: 7, deleted directory: ./server/test
+
+[Sun Apr  3 19:37:47 2022]
+client Ali with command socket id: 6, data socket id: 7, used 'quit' command
+
+New Connection in request channel, address :127.0.0.1:58590
+New Connection in data channel, address :127.0.0.2:37906
+
+[Sun Apr  3 19:41:40 2022]
+Adding to list of sockets as: 0
+
+[Sun Apr  3 19:41:44 2022]
+client with command socket id: 6, data socket id: 7, entered username: Ali, should enter password.
+
+[Sun Apr  3 19:41:46 2022]
+client with command socket id: 6, data socket id: 7,logged in as: Ali
+
+[Sun Apr  3 19:41:48 2022]
+client Ali with command socket id: 6, data socket id: 7, used 'pwd' command
+
+[Sun Apr  3 19:41:49 2022]
+client Ali with command socket id: 6, data socket id: 7, used 'ls' command
+
+[Sun Apr  3 19:41:51 2022]
+client Ali with command socket id: 6, data socket id: 7, used 'quit' command
