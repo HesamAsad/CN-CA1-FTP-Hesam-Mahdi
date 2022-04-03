@@ -161,7 +161,8 @@ bool Server::findPass(std::string password, std::string username, bool* isAdmin)
   return false;
 }
 
-void Server::handleUser(std::string* loggedInUsername, bool* user, bool pass, int commandSocket, int dataSocket, std::vector<std::string> parsed){
+void Server::handleUser(std::string* loggedInUsername, bool* user, bool pass, int commandSocket,
+                         int dataSocket, std::vector<std::string> parsed) {
   if(*user && pass) {
     send(commandSocket, "500: Error", 12, 0);
     printTime();
@@ -195,7 +196,7 @@ void Server::handleUser(std::string* loggedInUsername, bool* user, bool pass, in
   }
 }
 
-void Server::handleInfo(void* newSocket){
+void Server::handleInfo(void* newSocket) {
   bool user = false, pass = false;
   socketData * sock = (socketData *)newSocket;
   std::string loggedInUsername, directory = "./server";
@@ -232,7 +233,8 @@ void Server::handleInfo(void* newSocket){
   }
 }
 
-void Server::handlePass(std::string username, bool* user, bool* pass, int commandSocket, int dataSocket, std::vector<std::string> parsed, bool* isAdmin){
+void Server::handlePass(std::string username, bool* user, bool* pass, int commandSocket, int dataSocket, 
+                        std::vector<std::string> parsed, bool* isAdmin){
   if(*user && *pass){
     send(commandSocket, "500: Error", 12, 0);
     printTime();
@@ -273,7 +275,8 @@ void Server::handlePass(std::string username, bool* user, bool* pass, int comman
   
 }
 
-void Server::handleHelp(std::vector<std::string> parsed, int commandSocket, int dataSocket, bool user, bool pass, std::string username){ 
+void Server::handleHelp(std::vector<std::string> parsed, int commandSocket, 
+              int dataSocket, bool user, bool pass, std::string username) { 
   if(!user || !pass){
     send(commandSocket, "332: Need account for login.", 29, 0);
     printLoginError("help", commandSocket, dataSocket);
@@ -334,7 +337,8 @@ std::string Server::checkForServer(std::string cwd, bool* flag){
   return cwd;
 } 
 
-void Server::handle_cwd(std::vector<std::string> parsed, int commandSocket, int dataSocket, bool user, bool pass, std::string* cwd, std::string username){
+void Server::handle_cwd(std::vector<std::string> parsed, int commandSocket, int dataSocket, bool user,
+                     bool pass, std::string* cwd, std::string username){
   if(!user || !pass){
     send(commandSocket, "332: Need account for login.", 29, 0);
     printLoginError("cwd", commandSocket, dataSocket);
@@ -373,7 +377,8 @@ void Server::handle_cwd(std::vector<std::string> parsed, int commandSocket, int 
       <<", used 'cwd' command."<<std::endl<<"new user directory: "<< *cwd<<std::endl;
 }
 
-void Server::handle_mkd(std::vector<std::string> parsed, int commandSocket, int dataSocket, bool user, bool pass, std::string cwd, std::string username){
+void Server::handle_mkd(std::vector<std::string> parsed, int commandSocket, int dataSocket, bool user,
+                       bool pass, std::string cwd, std::string username){
   if(!user || !pass){
     send(commandSocket, "332: Need account for login.", 29, 0);
     printLoginError("mkd", commandSocket, dataSocket);
@@ -423,7 +428,8 @@ void Server::handle_mkd(std::vector<std::string> parsed, int commandSocket, int 
       <<" created "<<msg<<std::endl;
 }
 
-void Server::handle_dele(std::vector<std::string> parsed, int commandSocket, int dataSocket, bool user, bool pass, std::string cwd, bool isAdmin, std::string username){
+void Server::handle_dele(std::vector<std::string> parsed, int commandSocket, int dataSocket, bool user,
+                         bool pass, std::string cwd, bool isAdmin, std::string username){
   if(!user || !pass){
     send(commandSocket, "332: Need account for login.", 29, 0);
     printLoginError("dele", commandSocket, dataSocket);
