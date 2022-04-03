@@ -2,8 +2,8 @@
 
 std::vector<std::string> data;
 std::vector<std::string> admin_files;
-std::string command_port;
-std::string data_port;
+std::string commandPort;
+std::string dataPort;
 std::vector<User> user_list;
 std::string users_str;
 std::string files_str;
@@ -156,7 +156,7 @@ void Json::parse(std::string json_data) {
                 str += json_data[i];
                 i++;
             }
-            data_port = str;
+            dataPort = str;
             str = "";
             i++;
             continue;
@@ -168,7 +168,7 @@ void Json::parse(std::string json_data) {
                 str += json_data[i];
                 i++;
             }
-            command_port = str;
+            commandPort = str;
             str = "";
             i++;
             continue;
@@ -205,9 +205,6 @@ void Json::jsonParser(){
 }
 
 std::vector<User> Json::get_users() { return user_list; }
-
-std::vector<std::string> Json::get_files(){return admin_files;}
-
-std::string Json::getCommandPort(){return command_port;}
-
-std::string Json::getDataPort(){return data_port;}
+std::vector<std::string> Json::get_files() { return admin_files; }
+std::string Json::getCommandPort() { return commandPort; }
+std::string Json::getDataPort() { return dataPort; }

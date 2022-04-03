@@ -524,13 +524,14 @@ void Server::handle_dl(std::vector<std::string> parsed, int commandSocket, int d
       int content_size = content.size();
       if((remaining_size - content_size) < 0) {
         printTime();
+        logs << "SIZE ERROR\n";
         logs<<"client "<<loggedInUsername<<" with command socket id: "<<commandSocket<<", data socket id: "<<dataSocket
             <<" was downloading a too large file."<<std::endl;
         send(commandSocket, "!425: Can't open data connection.", 34, 0);
         return;
       } 
       else {
-        users_list[i].change_size(content.size());
+        users_list[i].decreaseSize(content.size());
         break;
       }
     }
@@ -543,7 +544,8 @@ void Server::handle_dl(std::vector<std::string> parsed, int commandSocket, int d
       <<", used 'retr " << parsed[1] <<"' command"<<std::endl;
 }
 
-void Server::handle_ls(std::vector<std::string> parsed, int commandSocket, int dataSocket, bool user, bool pass, std::string cwd, std::string username){
+void Server::handle_ls(std::vector<std::string> parsed, int commandSocket, int dataSocket, 
+                        bool user, bool pass, std::string cwd, std::string username) {
   if(!user || !pass){
     send(commandSocket, "!", 2, 0);
     send(commandSocket, "332: Need account for login.", 29, 0);

@@ -8,7 +8,7 @@ class User {
         std::string get_password();
         bool is_admin();
         int get_size();
-        void change_size(int size_);
+        void decreaseSize(int size_);
     private:
         std::string username;
         std::string password;

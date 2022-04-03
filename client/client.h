@@ -24,7 +24,7 @@ char* str2charstar(std::string s);
 
 class Client {
   public:
-    void connectCh(char* argv[]);
+    void connectCh(char* ports[]);
     void handleInfo();
     void handleHelp();
     void handle_ls();

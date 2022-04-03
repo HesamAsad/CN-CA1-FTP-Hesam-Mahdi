@@ -6,17 +6,17 @@ int broadcastFD;
 int dataFD;
 
 
-void Client::connectCh(char* argv[]) {
+void Client::connectCh(char* ports[]) {
     if((broadcastFD = socket(AF_INET, SOCK_STREAM, 0)) < 0 ||
         (dataFD = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         std::cout << "failed to open socket" << std::endl;
         exit(EXIT_FAILURE);
     }
     addrSocket.sin_family = AF_INET;
-    addrSocket.sin_port = htons(atoi(argv[0]));
+    addrSocket.sin_port = htons(atoi(ports[0]));
     addrSocket.sin_addr.s_addr = inet_addr(REQUEST_ADDR);
     dataSocketAddr.sin_family = AF_INET;
-    dataSocketAddr.sin_port = htons(atoi(argv[1]));
+    dataSocketAddr.sin_port = htons(atoi(ports[1]));
     dataSocketAddr.sin_addr.s_addr = inet_addr(DATA_ADDR);
     if(connect(broadcastFD, (struct sockaddr*) &addrSocket, sizeof(addrSocket)) < 0
         || connect(dataFD, (struct sockaddr*) &dataSocketAddr, sizeof(dataSocketAddr)) < 0){
@@ -49,7 +49,8 @@ void Client::handleInfo() {
         handle_ls();
         return;
     }
-    else if (in[0] == 'r' && in[1] == 'e' && in[2] == 't' && in[3] == 'r') {        //retr
+    else if (in[0] == 'r' && in[1] == 'e' && 
+                in[2] == 't' && in[3] == 'r') {        //retr
         handle_dl(in+5);
         return;
     }
@@ -68,8 +69,8 @@ void Client::handleHelp() {
         return;
     }
     delete msg;
-    char in[1012];
-    recv(broadcastFD, in, 1012, 0);
+    char in[1200];
+    recv(broadcastFD, in, 1200, 0);
     std::cout<<in<<std::endl;
 }
 
